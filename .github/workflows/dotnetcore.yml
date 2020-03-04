@@ -1,0 +1,21 @@
+name: .NET Core
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: Restore with dotnet
+      run: dotnet restore
+    - name: Build with dotnet
+      run: dotnet build --configuration Release -r linux-x64
+    - name: Publish with dotnet
+      run: dotnet publish --configuration Release -o '/published/' -r linux-x64 -f netcoreapp2.2
